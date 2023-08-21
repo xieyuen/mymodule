@@ -38,7 +38,7 @@ def isCanFor(x: Any) -> bool: return isIterable(x)
 def isImmutable(x: Any) -> bool: return isNumber(x) or isTuple(x) or isString(x)
 
 
-def isCharacter(x: Any) -> bool: return isString(x) and len(x) == 1
+def isCharacter(x: Any) -> bool: return len(x) == 1 if isString(x) else False
 
 
 def isDouble(x: Any) -> bool:
