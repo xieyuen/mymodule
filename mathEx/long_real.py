@@ -1,15 +1,15 @@
 from typing import Tuple
 
-from .real_num import Real
+from real_num import Real
 
 
 class LongReal:
-    '''
+    """
     这是用来储存大数的实数类
 
     :param:`num` str, 储存数
     :param:`sym` str, 储存数的符号
-    '''
+    """
     num: str
     sym: str
 
@@ -78,8 +78,10 @@ def __init(self, num: int|float|str|Real|LongReal) -> LongReal:
 def __repr(self) -> Tuple[str, str]:
     return self.sym, self.num
 
+
 LongReal.__init__ = __init
 LongReal.__repr__ = __repr
+
 
 # --------------------------------------------------------------------------------------------------
 
@@ -90,7 +92,7 @@ def __str  (self) -> str:   return self.sym + self.num
 def __bool (self) -> bool:  return True if self.num != '' else False
 
 
-LongReal.__int__ = __int
+LongReal.__int__   = __int
 LongReal.__float__ = __float
 LongReal.__str__   = __str
 LongReal.__bool__  = __bool
@@ -114,13 +116,14 @@ LongReal.__abs__ = __abs
 # 数学运算(加、减、乘、除、模等等)
 def __add(self, other: LongReal) -> LongReal:
     return \
-        LongReal(self.num + other.num)  \
+        LongReal(self.num + other.num) \
         if isinstance(other, LongReal) \
         else (
-            LongReal(self.num + other)  
-            if (isinstance(other, int) or isinstance(other, float)) 
+            LongReal(self.num + other)
+            if (isinstance(other, int) or isinstance(other, float))
             else NotImplemented
         )
+
 
 def __sub(self, other: LongReal) -> LongReal:
     return \
@@ -192,7 +195,10 @@ def __pow(self, other: LongReal) -> LongReal:
             else NotImplemented
         )
 
-def __divmod(self, other: LongReal) -> Tuple[LongReal, LongReal]: return (self.__div__(other), self.__mod__(other)) if isinstance(other, LongReal) else ((self.__div__(LongReal(other)), self.__mod__(LongReal(other))) if (isinstance(other, int) or isinstance(other, float)) else NotImplemented)
+
+def __divmod(self, other: LongReal) -> Tuple[LongReal, LongReal]:
+    return self.__truediv__(other), self.__mod__(other)
+
 
 LongReal.__add__       = __add
 LongReal.__sub__       = __sub
