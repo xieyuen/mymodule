@@ -24,7 +24,7 @@ def __init(self, num: int|float|str|Real|LongReal) -> LongReal:
         raise TypeError('LongReal 类只能使用 int/float/str/Real/LongReal 类型对象进行初始化')
 
     # 科学计数法
-    if e in str(num):
+    if 'e' in str(num):
         raise ValueError('LongReal 类暂不支持科学计数法！')
 
     # LongReal
