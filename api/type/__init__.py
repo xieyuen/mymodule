@@ -8,7 +8,7 @@ from ...type.cname import isInt, isStr, isNum
 
 from ...type.extra import \
 	isLongReal, isReal, isNumber, isEmpty, isNumNoBool, \
-	isCanFor
+	isCanFor, isImmutable
 
 
 __all__ = [
@@ -17,9 +17,9 @@ __all__ = [
 	# -------------------
 
 	'isInteger', 'isFloat', 'isComplex', 'isString',
-	'isList', 'isTuple', 'isDict', 'isSet',
+	'isList', 'isTuple', 'isDict', 'isSet', 'isBool',
 	'isCallable', 'isIterable', 'isIterator', 'isGenerater',
-	'isBool', 'isNone',
+	'isNone',
 
 	# --------------------
 	#    Extra Function
@@ -27,6 +27,7 @@ __all__ = [
 
 	'isLongReal', 'isReal', 'isNumber',
 	'isEmpty', 'isNumNoBool', 'isCanFor',
+	'isImmutable',
 
 	# --------------------
 	#    Canonical Name

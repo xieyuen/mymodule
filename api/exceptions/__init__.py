@@ -2,7 +2,7 @@ from ...exceptions import \
 	UndefinedError, DisableError, UnknownArgumentError, \
 	UnknownFunctionError, UnknownMethodError, UnknownCommandError, \
 	UnknownCommandNodeError, InvalidArgumentError, CommandParseError, \
-	Finish
+	Finish, FileError
 
 __all__ = [
 	'UndefinedError', 'DisableError',
@@ -12,5 +12,5 @@ __all__ = [
 	'UnknownCommandNodeError',
 
 	'InvalidArgumentError', 'CommandParseError',
-	'Finish',
+	'Finish', 'FileError',
 ]

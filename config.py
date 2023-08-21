@@ -1,9 +1,9 @@
-'''
+"""
 配置文件，模板已写好，直接调用就行
 
 使用方法:
 使用前需要打下面三行代码
-1. `from mymod.config import Config`
+1. `from mymodule.config import Config`
 2. `config = Config()`
 3. `config.default_config = ...`
 然后就可以用了
@@ -18,16 +18,17 @@
 * update_config_value()     更新配置文件的值，使用 “.” 来表示子字典
                                 例如 `a.b.c` 等价于 `config[a][b][c]`
 * check()                   检查配置文件是否完整，在调用`load()`时会自动调用
-'''
+"""
 
 import os
+import yaml
 from math import isclose
 
-from .logger import logger
+from logger import logger
 
 
 class Config:
-    '''
+    """
     配置文件，模板已写好，直接调用就行
 
     使用方法:
@@ -36,10 +37,10 @@ class Config:
     2. `config = Config()`
     3. `config.default_config = ...`
     然后就可以用了
-    
+
     `default_config`储存默认配置
     `config`储存读取的配置
-    
+
     一些方法：
     * load()                    读取配置文件，储存在config.config这个字典里
     * save()                    保存配置文件
@@ -48,7 +49,7 @@ class Config:
                                     例如 `a.b.c` 等价于 `config[a][b][c]`
                                     就像这样：update_config_value('a.b.c', new_value)
     * check()                   检查配置文件是否完整，在调用`load()`时会自动调用
-    '''
+    """
 
     default_config = {}
     config = {}
@@ -68,7 +69,8 @@ class Config:
                     logger.warning('使用默认值代替')
                     config[key] = value
                 elif not isinstance(config[key], type(value)):
-                    try: raise TypeError(f'配置文件中键 {key} 的值不是 {type(value)} 类型数据')
+                    try:
+                        raise TypeError(f'配置文件中键 {key} 的值不是 {type(value)} 类型数据')
                     except TypeError as e:
                         logger.catch_exc('捕捉异常：TypeError')
                         logger.catch_exc(e)
@@ -101,7 +103,7 @@ class Config:
             if self.config == {}:
                 logger.warning('默认配置为空！')
                 logger.warning('请使用"config.default_config = "添加默认配置')
-                os._exit(1)
+                raise SystemExit(-1)
             if isclose(os.path.getsize(self.path + self.cfg_file_name), 0, abs_tol=512, rel_tol=512):
                 logger.warning('配置文件为空文件！')
                 logger.warning('即将创建默认配置文件')
@@ -109,7 +111,7 @@ class Config:
                 break
             logger.crit('配置文件读取失败！')
             logger.crit('请在Github上提交一个PR反映此问题')
-            os._exit(1)
+            raise SystemExit(-1)
         self.check(self.config, self.default_config)
         return self.config
 

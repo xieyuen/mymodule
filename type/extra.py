@@ -1,13 +1,37 @@
-from typing import Any
+from typing import Any, Iterable
 
-from .base import isInteger, isFloat, isComplex, isBool, isIterable, isIterator
+from base import \
+    isInteger, isFloat, isString, isTuple, \
+    isComplex, isBool, isIterable, \
+    isDict, isList
+
 from ..mathEx.long_real import LongReal
 from ..mathEx.real_num import Real
-
+from new_type import Array
 
 def isLongReal (x: Any) -> bool: return isinstance(x, LongReal)
 def isReal     (x: Any) -> bool: return isInteger(x) or isFloat(x) or isLongReal(x) or isinstance(x, Real)
 def isNumber   (x: Any) -> bool: return isComplex(x) or isReal(x)
-def isEmpty    (x: Any) -> bool: return (not x) if not (isNumber(x) or isBool(x)) else False
+def isEmpty    (x: Any) -> bool: return (not x) if isString(x) or isDict(x) or isList(x) or isTuple(x) else False
 def isNumNoBool(x: Any) -> bool: return isNumber(x) and not isBool(x)
 def isCanFor   (x: Any) -> bool: return isIterable(x)
+def isImmutable(x: Any) -> bool: return isNumber(x) or isTuple(x) or isString(x)
+
+def isBoolean(x: Any) -> bool: return isBool(x)
+def isCharacter(x: Any) -> bool: return isString(x) and len(x) == 1
+def isDouble(x: Any) -> bool:
+    from .. import logger
+    logger.error("Python 不支持 Double 类型 | Double type is not supported in Python")
+    logger.warning("调用 isFloat 进行判断")
+    return isFloat(x)
+def isArray(x: Iterable) -> bool:
+    if not isinstance(x, list):
+        return False
+    if isinstance(x, Array):
+        return True
+    __type = type(x[0])
+    for i in x:
+        if type(i) != __type:
+            return False
+    return True
+def isMap(x: Any) -> bool: return isDict(x)

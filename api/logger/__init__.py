@@ -1,4 +1,4 @@
-from ...logger import logger, logger, \
+from ...logger import logger, Logger, \
 	debug, info, warning, warn, error, \
 	crit, critical
 

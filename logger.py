@@ -1,4 +1,4 @@
-'''
+"""
 一个简易的日志工具
 
 使用
@@ -16,7 +16,7 @@
 各有简写，比如
 `warning`和`warn`
 `critical`和`crit`
-'''
+"""
 
 
 from typing import Tuple, TypeVar
@@ -24,7 +24,7 @@ from typing import Tuple, TypeVar
 
 __all__ = [
     # 类及其实例
-    'logger','Logger',
+    'logger', 'Logger',
 
     # 外放至本文件的函数
     'debug', 'info', 'warning',
@@ -36,11 +36,12 @@ __all__ = [
 
 
 Level = TypeVar('Level', 'debug', 'info', 'warning', 'error', 'critical')
-Masssage = TypeVar('Masssage', str, bytes, bytearray, memoryview)
+Massage = TypeVar('Massage', str, bytes, bytearray, memoryview)
 
 
 class Logger:
-    '''日志工具'''
+    """日志工具"""
+
     class PrintLog:
         '''日志打印'''
         __log_color = { # 日志颜色
@@ -64,7 +65,7 @@ class Logger:
                 if self.level != 'catch_exc' \
                 else ...
 
-        def __call__(self, message: str) -> Tuple[Level, Masssage]:
+        def __call__(self, message: str) -> Tuple[Level, Massage]:
             if self.level == 'catch_exc':
                 print(f'\033[93m[CatchExcept] {self.__log_map["info"]}'
                       f' \033[0m{message}')
@@ -73,33 +74,50 @@ class Logger:
                     print(f'{self.log} \033[0m{message}')
                 else:
                     print(f"{self.log} {message}\033[0m")
-            return  self.level, message
+            return self.level, message
+
     def __init__(self):  # 实例化
-        self.__debug     = self.PrintLog('debug')
-        self.__info      = self.PrintLog('info')
-        self.__warning   = self.PrintLog('warning')
-        self.__error     = self.PrintLog('error')
-        self.__critical  = self.PrintLog('critical')
+        self.__debug = self.PrintLog('debug')
+        self.__info = self.PrintLog('info')
+        self.__warning = self.PrintLog('warning')
+        self.__error = self.PrintLog('error')
+        self.__critical = self.PrintLog('critical')
         self.__catch_exc = self.PrintLog('catch_exc')
+
     # 定义日志打印方法
-    def debug    (self, msg: str) -> Tuple[Level, Masssage] : return self.__debug    (msg) # debug    日志
-    def info     (self, msg: str) -> Tuple[Level, Masssage] : return self.__info     (msg) # info     日志
-    def warning  (self, msg: str) -> Tuple[Level, Masssage] : return self.__warning  (msg) # warning  日志
-    def warn     (self, msg: str) -> Tuple[Level, Masssage] : return self.__warning  (msg) # warning  日志
-    def error    (self, msg: str) -> Tuple[Level, Masssage] : return self.__error    (msg) # error    日志
-    def critical (self, msg: str) -> Tuple[Level, Masssage] : return self.__critical (msg) # critical 日志
-    def crit     (self, msg: str) -> Tuple[Level, Masssage] : return self.__critical (msg) # critical 日志
-    def catch_exc(self, msg: str) -> Tuple[Level, Masssage] : return self.__catch_exc(msg) # 异常日志
+    def debug(self, msg: str) -> Tuple[Level, Massage]:
+        return self.__debug(msg)  # debug    日志
+
+    def info(self, msg: str) -> Tuple[Level, Massage]:
+        return self.__info(msg)  # info     日志
+
+    def warning(self, msg: str) -> Tuple[Level, Massage]:
+        return self.__warning(msg)  # warning  日志
+
+    def warn(self, msg: str) -> Tuple[Level, Massage]:
+        return self.__warning(msg)  # warning  日志
+
+    def error(self, msg: str) -> Tuple[Level, Massage]:
+        return self.__error(msg)  # error    日志
+
+    def critical(self, msg: str) -> Tuple[Level, Massage]:
+        return self.__critical(msg)  # critical 日志
+
+    def crit(self, msg: str) -> Tuple[Level, Massage]:
+        return self.__critical(msg)  # critical 日志
+
+    def catch_exc(self, msg: str) -> Tuple[Level, Massage]:
+        return self.__catch_exc(msg)  # 异常日志
 
 
 # 实例
 logger = Logger()
 
-def debug    (msg: Masssage) -> Tuple[Level, Masssage] : return logger.debug    (msg) # debug    日志
-def info     (msg: Masssage) -> Tuple[Level, Masssage] : return logger.info     (msg) # info     日志
-def warning  (msg: Masssage) -> Tuple[Level, Masssage] : return logger.warning  (msg) # warning  日志
-def warn     (msg: Masssage) -> Tuple[Level, Masssage] : return logger.warn     (msg) # warning  日志
-def error    (msg: Masssage) -> Tuple[Level, Masssage] : return logger.error    (msg) # error    日志
-def critical (msg: Masssage) -> Tuple[Level, Masssage] : return logger.critical (msg) # critical 日志
-def crit     (msg: Masssage) -> Tuple[Level, Masssage] : return logger.crit     (msg) # critical 日志
-def catch_exc(msg: Masssage) -> Tuple[Level, Masssage] : return logger.catch_exc(msg) # 异常日志
+def debug    (msg: Massage) -> Tuple[Level, Massage] : return logger.debug    (msg) # debug    日志
+def info     (msg: Massage) -> Tuple[Level, Massage] : return logger.info     (msg) # info     日志
+def warning  (msg: Massage) -> Tuple[Level, Massage] : return logger.warning  (msg) # warning  日志
+def warn     (msg: Massage) -> Tuple[Level, Massage] : return logger.warn     (msg) # warning  日志
+def error    (msg: Massage) -> Tuple[Level, Massage] : return logger.error    (msg) # error    日志
+def critical (msg: Massage) -> Tuple[Level, Massage] : return logger.critical (msg) # critical 日志
+def crit     (msg: Massage) -> Tuple[Level, Massage] : return logger.crit     (msg) # critical 日志
+def catch_exc(msg: Massage) -> Tuple[Level, Massage] : return logger.catch_exc(msg) # 异常日志

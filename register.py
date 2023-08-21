@@ -5,11 +5,12 @@ from .logger import logger
 
 __all__ = ["Register", 'funcs', 'classes']
 
+
 class Register(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._dict = {}
-    
+
     def __call__(self, target):
         return self.register(target)
 
@@ -25,21 +26,24 @@ class Register(dict):
     def __str__(self):
         return str(self._dict)
 
-    def keys(self) -> List[str]: return self._dict.keys()
+    def keys(self):
+        return self._dict.keys()
 
-    def values(self) -> List[callable]: return self._dict.values()
+    def values(self):
+        return self._dict.values()
 
-    def items(self) -> List[Tuple[str, callable]]: return self._dict.items()
+    def items(self):
+        return self._dict.items()
 
     def get(self, key, default=None) -> Any:
         return self._dict.get(key, default)
-    
+
     def setdefault(self, key, default=None) -> Any:
         return self._dict.setdefault(key, default)
 
     def pop(self, key, default=None):
         return self._dict.pop(key, default)
-    
+
     def clear(self):
         return self._dict.clear()
 

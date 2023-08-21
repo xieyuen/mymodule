@@ -1,7 +1,8 @@
 class HighPrecisionAlgorithms:
-    '''
+    """
     高精度算法
-    '''
+    """
+
     def __init__(self):
         self.add = self.addition = self.Addition()
         self.sub = self.subtract = self.subtraction = self.Subtraction()
@@ -42,9 +43,9 @@ class HighPrecisionAlgorithms:
             return res_int
 
         def float(self, a: float, b: float) -> float:
-            '''
+            """
             高精度计算(小数/浮点数)
-            '''
+            """
             if not (type(a) == type(b) == float):
                 raise TypeError("输入必须为小数 Input must be a float.")
 
@@ -77,9 +78,10 @@ class HighPrecisionAlgorithms:
 
         def __call__(self, a: int|float, b: int|float) -> int|float:
             '''
+            """
             高精度加法——自动匹配算法
             允许输入两个数字(不分整数小数)
-            '''
+            """
             if type(a) == type(b) == int:
                 return self.int(a, b)
             if int(a) == a and int(b) == b:
@@ -88,9 +90,9 @@ class HighPrecisionAlgorithms:
 
     class Subtraction:
         def int(self, a: int, b: int) -> int:
-            '''
+            """
             高精度减法(整数)
-            '''
+            """
             if not (type(a) == type(b) == int):
                 raise TypeError("输入必须为整数 Input must be an integer.")
 
@@ -118,9 +120,9 @@ class HighPrecisionAlgorithms:
             return res_int
 
         def float(self, a: float, b: float) -> float:
-            '''
+            """
             高精度减法(小数/浮点数)
-            '''
+            """
             if not (type(a) == type(b) == float):
                 raise TypeError("输入必须为小数 Input must be a float.")
 
@@ -147,9 +149,10 @@ class HighPrecisionAlgorithms:
 
         def __call__(self, a: int|float, b: int|float) -> int|float:
             '''
+            """
             高精度减法——自动匹配算法
             允许输入两个数字(不分整数小数)
-            '''
+            """
             if type(a) == type(b) == int:
                 return self.int(a, b)
             if int(a) == a and int(b) == b:
@@ -158,9 +161,9 @@ class HighPrecisionAlgorithms:
 
     class Multiplication:
         def int(self, a: int, b: int) -> int:
-            '''
+            """
             高精度乘法(整数)
-            '''
+            """
             if not (type(a) == type(b) == int):
                 raise TypeError("输入必须为整数 Input must be an integer.")
 
@@ -198,7 +201,7 @@ class HighPrecisionAlgorithms:
             return sym * res
 
         def float(self, a: float, b: float) -> float:
-            '''高精度乘法(小数)'''
+            """高精度乘法(小数)"""
             if not (type(a) == type(b) == float):
                 raise TypeError("输入必须为小数 Input must be a float.")
 
@@ -215,6 +218,8 @@ class HighPrecisionAlgorithms:
             # 将小数从小数点拆分
             a_int, a_dec = str(a).split(".")
             b_int, b_dec = str(b).split(".")
+            a_int, a_dec = a_str.split(".")
+            b_int, b_dec = b_str.split(".")
 
             # 小数乘法的重点是结果小数位数
             # 小数位数 = 乘数小数位数和
@@ -238,9 +243,10 @@ class HighPrecisionAlgorithms:
 
         def __call__(self, a: int|float, b: int|float) -> int|float:
             '''
+            """
             高精度乘法——自动匹配算法
             允许输入两个数字(不分整数小数)
-            '''
+            """
             if type(a) == type(b) == int:
                 return self.int(a, b)
             if int(a) == a and int(b) == b:
@@ -248,7 +254,7 @@ class HighPrecisionAlgorithms:
             return self.float(float(a), float(b))
 
     def divide_int(self, a: int, b: int) -> int:
-        '''高精度除法(整数)'''
+        """高精度除法(整数)"""
         if not (type(a) == type(b) == int):
             raise TypeError("输入必须为整数 Input must be an integer.")
 

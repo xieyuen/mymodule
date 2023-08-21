@@ -1,7 +1,7 @@
 # Decorators
 import time
 
-from . import logger
+from .. import logger
 
 
 def elapsed_time(func):
