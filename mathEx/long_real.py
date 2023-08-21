@@ -13,8 +13,7 @@ class LongReal:
     num: str
     sym: str
 
-    def __init__(self, num: int | float | str | Real):
-        num
+    def __init__(self, num: int | float | str | Real): ...
 
 
 # --------------------------------------------------------------------------------------------------
