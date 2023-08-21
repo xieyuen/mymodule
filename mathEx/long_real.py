@@ -147,12 +147,62 @@ LongReal.__rpow__      = __rpow
 # --------------------------------------------------------------------------------------------------
 
 # 比较运算
-def __eq(self, other: Real) -> bool: return (self.num == other.num) if isinstance(other, Real) else ((self.num == other) if isinstance(other, int) or isinstance(other, float) else NotImplemented)
-def __ne(self, other: Real) -> bool: return (self.num != other.num) if isinstance(other, Real) else ((self.num != other) if isinstance(other, int) or isinstance(other, float) else NotImplemented)
-def __lt(self, other: Real) -> bool: return (self.num < other.num)  if isinstance(other, Real) else ((self.num < other)  if isinstance(other, int) or isinstance(other, float) else NotImplemented)
-def __le(self, other: Real) -> bool: return (self.num <= other.num) if isinstance(other, Real) else ((self.num <= other) if isinstance(other, int) or isinstance(other, float) else NotImplemented)
-def __gt(self, other: Real) -> bool: return (self.num > other.num)  if isinstance(other, Real) else ((self.num > other)  if isinstance(other, int) or isinstance(other, float) else NotImplemented)
-def __ge(self, other: Real) -> bool: return (self.num >= other.num) if isinstance(other, Real) else ((self.num >= other) if isinstance(other, int) or isinstance(other, float) else NotImplemented)
+def __eq(self: LongReal, other: int|float|LongReal) -> bool:
+    return (self.num == other.num and self.sym == other.sym) \
+        if isinstance(other, LongReal) \
+        else (
+            (
+                (self.sym + self.num) == str(other)
+            ) if isinstance(other, int) or isinstance(other, float)
+            else NotImplemented
+        )
+
+
+def __lt(self: LongReal, other: int|float|LongReal) -> bool:
+    # 小于
+    return (  # is LongReal
+        self.num < other.num
+            if self.sym == other.sym
+            else (
+                False if other.sym == '+' else True
+            )
+        ) if isinstance(other, LongReal) \
+        else (
+            (  # is int or float
+                (  # other > 0
+                    True if self.sym == '-'
+                    else (  # >0 and >0
+                        ...
+                    )
+                )
+                if str(other)[0] != '-'
+                else (  # other > 0
+                    False if self.sym == '+'
+                    else (
+                        ...
+                    )
+                )
+            )
+            if isinstance(other, int) or isinstance(other, float)
+            else NotImplemented
+        )
+
+
+def __ne(self: LongReal, other: LongReal) -> bool:
+    return not self.__eq__(other)
+
+
+def __le(self: LongReal, other: LongReal) -> bool:
+    return self.__lt__(other) or self.__eq__(other)
+
+
+def __gt(self: LongReal, other: LongReal) -> bool:
+    return not self.__le__(other)
+
+
+def __ge(self: LongReal, other: LongReal) -> bool:
+    return not self.__lt__(other)
+
 
 LongReal.__eq__ = __eq
 LongReal.__ne__ = __ne
