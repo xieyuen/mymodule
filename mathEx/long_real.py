@@ -13,6 +13,7 @@ class LongReal:
     num: str
     sym: str
 
+
 # --------------------------------------------------------------------------------------------------
 
 # init 函数
@@ -73,7 +74,8 @@ def __init(self, num: int|float|str|Real|LongReal) -> LongReal:
 
     return self
 
-def __repr(self) -> str:
+
+def __repr(self) -> Tuple[str, str]:
     return self.sym, self.num
 
 LongReal.__init__ = __init
@@ -87,10 +89,12 @@ def __float(self) -> float: return float(self.sym + self.num)
 def __str  (self) -> str:   return self.sym + self.num
 def __bool (self) -> bool:  return True if self.num != '' else False
 
-LongReal.__int__   = __int
+
+LongReal.__int__ = __int
 LongReal.__float__ = __float
 LongReal.__str__   = __str
 LongReal.__bool__  = __bool
+
 
 # --------------------------------------------------------------------------------------------------
 
@@ -99,22 +103,96 @@ def __neg(self) -> LongReal: return LongReal("-" + self.num)
 def __pos(self) -> LongReal: return LongReal(self)
 def __abs(self) -> LongReal: return LongReal(self.num)
 
+
 LongReal.__neg__ = __neg
 LongReal.__pos__ = __pos
 LongReal.__abs__ = __abs
 
+
 # --------------------------------------------------------------------------------------------------
 
 # 数学运算(加、减、乘、除、模等等)
-def __add      (self, other: LongReal) -> LongReal: return LongReal(self.num + other.num)  if isinstance(other, LongReal) else (LongReal(self.num + other)  if (isinstance(other, int) or isinstance(other, float)) else NotImplemented)
-def __sub      (self, other: LongReal) -> LongReal: return LongReal(self.num - other.num)  if isinstance(other, LongReal) else (LongReal(self.num - other)  if (isinstance(other, int) or isinstance(other, float)) else NotImplemented)
-def __mul      (self, other: LongReal) -> LongReal: return LongReal(self.num * other.num)  if isinstance(other, LongReal) else (LongReal(self.num * other)  if (isinstance(other, int) or isinstance(other, float)) else NotImplemented)
-def __div      (self, other: LongReal) -> LongReal: return LongReal(self.num / other.num)  if isinstance(other, LongReal) else (LongReal(self.num / other)  if (isinstance(other, int) or isinstance(other, float)) else NotImplemented)
-def __floordiv (self, other: LongReal) -> LongReal: return LongReal(self.num // other.num) if isinstance(other, LongReal) else (LongReal(self.num // other) if (isinstance(other, int) or isinstance(other, float)) else NotImplemented)
-def __truediv  (self, other: LongReal) -> LongReal: return LongReal(self.num / other.num)  if isinstance(other, LongReal) else (LongReal(self.num / other)  if (isinstance(other, int) or isinstance(other, float)) else NotImplemented)
-def __mod      (self, other: LongReal) -> LongReal: return LongReal(self.num % other.num)  if isinstance(other, LongReal) else (LongReal(self.num % other)  if (isinstance(other, int) or isinstance(other, float)) else NotImplemented)
-def __pow      (self, other: LongReal) -> LongReal: return LongReal(self.num ** other.num) if isinstance(other, LongReal) else (LongReal(self.num ** other) if (isinstance(other, int) or isinstance(other, float)) else NotImplemented)
-def __divmod   (self, other: LongReal) -> Tuple[LongReal, LongReal]: return (self.__div__(other), self.__mod__(other)) if isinstance(other, LongReal) else ((self.__div__(LongReal(other)), self.__mod__(LongReal(other))) if (isinstance(other, int) or isinstance(other, float)) else NotImplemented)
+def __add(self, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num + other.num)  \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num + other)  
+            if (isinstance(other, int) or isinstance(other, float)) 
+            else NotImplemented
+        )
+
+def __sub(self, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num - other.num)  \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num - other)  
+            if (isinstance(other, int) or isinstance(other, float)) 
+            else NotImplemented
+        )
+
+def __mul(self, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num * other.num)  \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num * other)  
+            if (isinstance(other, int) or isinstance(other, float)) 
+            else NotImplemented
+        )
+
+def __div(self, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num / other.num)  \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num / other)  
+            if (isinstance(other, int) or isinstance(other, float)) 
+            else NotImplemented
+        )
+
+def __floordiv(self, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num // other.num) \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num // other) 
+            if (isinstance(other, int) or isinstance(other, float)) 
+            else NotImplemented
+        )
+
+def __truediv(self, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num / other.num)  \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num / other)  
+            if (isinstance(other, int) or isinstance(other, float)) 
+            else NotImplemented
+        )
+
+def __mod(self, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num % other.num)  \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num % other)  
+            if (isinstance(other, int) or isinstance(other, float)) 
+            else NotImplemented
+        )
+
+def __pow(self, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num ** other.num) \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num ** other) 
+            if (isinstance(other, int) or isinstance(other, float)) 
+            else NotImplemented
+        )
+
+def __divmod(self, other: LongReal) -> Tuple[LongReal, LongReal]: return (self.__div__(other), self.__mod__(other)) if isinstance(other, LongReal) else ((self.__div__(LongReal(other)), self.__mod__(LongReal(other))) if (isinstance(other, int) or isinstance(other, float)) else NotImplemented)
 
 LongReal.__add__       = __add
 LongReal.__sub__       = __sub
