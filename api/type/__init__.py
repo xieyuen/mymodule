@@ -2,13 +2,15 @@ from ...type.base import \
 	isInteger, isFloat, isComplex, isString, \
 	isList, isTuple, isDict, isSet, \
 	isCallable, isIterable, isIterator, \
-	isGenerater, isBool, isNone
+	isGenerator, isBool, isNone
 
-from ...type.cname import isInt, isStr, isNum
+from ...type.cname import \
+	isInt, isStr, isNum, isDictionary, \
+	isChar, isMap, isBoolean
 
 from ...type.extra import \
 	isLongReal, isReal, isNumber, isEmpty, isNumNoBool, \
-	isCanFor, isImmutable
+	isCanFor, isImmutable, isCharacter, isArray, isDouble
 
 
 __all__ = [
@@ -18,7 +20,7 @@ __all__ = [
 
 	'isInteger', 'isFloat', 'isComplex', 'isString',
 	'isList', 'isTuple', 'isDict', 'isSet', 'isBool',
-	'isCallable', 'isIterable', 'isIterator', 'isGenerater',
+	'isCallable', 'isIterable', 'isIterator', 'isGenerator',
 	'isNone',
 
 	# --------------------
@@ -27,11 +29,13 @@ __all__ = [
 
 	'isLongReal', 'isReal', 'isNumber',
 	'isEmpty', 'isNumNoBool', 'isCanFor',
-	'isImmutable',
+	'isImmutable', 'isCharacter', 'isArray',
+	'isDouble',
 
 	# --------------------
 	#    Canonical Name
 	# --------------------
 
-	'isInt', 'isStr', 'isNum',
+	'isInt', 'isStr', 'isNum', 'isDictionary', 'isChar',
+	'isMap', 'isBoolean',
 ]

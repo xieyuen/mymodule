@@ -1,6 +1,24 @@
 from typing import Any, Generator, Iterable, Iterator, Callable
 
 
+__all__ = [
+    'isInteger',
+    'isFloat',
+    'isComplex',
+    'isString',
+    'isList',
+    'isTuple',
+    'isDict',
+    'isSet',
+    'isCallable',
+    'isGenerator',
+    'isIterable',
+    'isIterator',
+    'isBool',
+    'isNone',
+]
+
+
 def isInteger(x: Any) -> bool: return isinstance(x, int)
 
 
@@ -34,7 +52,7 @@ def isIterable(x: Any) -> bool: return isinstance(x, Iterable)
 def isIterator(x: Any) -> bool: return isinstance(x, Iterator)
 
 
-def isGenerater(x: Any) -> bool: return isinstance(x, Generator)
+def isGenerator(x: Any) -> bool: return isinstance(x, Generator)
 
 
 def isBool(x: Any) -> bool: return (x is True) or (x is False)
