@@ -230,46 +230,134 @@ LongReal.__rpow__      = __rpow
 
 # --------------------------------------------------------------------------------------------------
 
+
 # 比较运算
-def __eq(self: LongReal, other: int|float|LongReal) -> bool:
+def __eq(self: LongReal, other: int | float | Real | LongReal) -> bool:
     return (self.num == other.num and self.sym == other.sym) \
         if isinstance(other, LongReal) \
         else (
             (
                 (self.sym + self.num) == str(other)
-            ) if isinstance(other, int) or isinstance(other, float)
+            ) if isinstance(other, int) or isinstance(other, float) or isinstance(other, Real)
             else NotImplemented
         )
 
 
-def __lt(self: LongReal, other: int|float|LongReal) -> bool:
-    # 小于
-    return (  # is LongReal
-        self.num < other.num
-            if self.sym == other.sym
-            else (
-                False if other.sym == '+' else True
-            )
-        ) if isinstance(other, LongReal) \
-        else (
-            (  # is int or float
-                (  # other > 0
-                    True if self.sym == '-'
-                    else (  # >0 and >0
-                        ...
-                    )
-                )
-                if str(other)[0] != '-'
-                else (  # other > 0
-                    False if self.sym == '+'
-                    else (
-                        ...
-                    )
-                )
-            )
-            if isinstance(other, int) or isinstance(other, float)
-            else NotImplemented
-        )
+def __lt(self: LongReal, other: int | float | Real | LongReal) -> bool:
+    if isinstance(other, LongReal) or isinstance(other, Real):
+        if isinstance(other, Real):
+            other = LongReal(other)
+
+        if self.sym == other.sym:  # 符号是否相同
+            return self.num < other.num
+
+        else:
+            # 符号不同正为大
+            return True if other.sym == '+' else False
+
+    if not (isinstance(other, int) or isinstance(other, float)):
+        return NotImplemented
+
+    if isinstance(other, int):
+        other_str = str(other)
+
+        if other_str[0] == '-':
+            # 切掉负号
+            other_str = other_str[1:]
+
+            # other 是一个负数
+            if self.sym == '+':
+                return True
+
+            if len(self.num) != len(other_str):
+                return True if len(self.num) > len(other_str) else False
+
+            for self_char, other_char in zip(self.num, other_str):
+                if self_char == other_char:
+                    continue
+                if int(self_char) > int(other_char):
+                    return True
+                else:
+                    return False
+
+        else:  # >0
+            if self.sym == '-':
+                return True
+
+            if len(self.num) != len(other_str):
+                return True if len(self.num) < len(other_str) else False
+
+            for self_char, other_char in zip(self.num, other_str):
+                if self_char == other_char:
+                    continue
+                if int(self_char) < int(other_char):
+                    return True
+                else:
+                    return False
+
+    if isinstance(other, float):
+        other_int, other_dec = str(other).split('.')
+
+        if other_int[0] == '-':
+            if self.sym == '+':
+                return False
+
+            # 切掉负号
+            other_int = other_int[1:]
+
+            try:
+                self_int, self_dec = self.num.split('.')
+            except ValueError:
+                # 当 self.num 是一个整数时
+                # 对整数部分先比较
+                if len(self.num) > len(other_int):
+                    return True
+                elif len(self.num) < len(other_int):
+                    return False
+
+                for self_char, other_char in zip(self.num, other_int):
+                    if self_char == other_char:
+                        continue
+                    if int(self_char) > int(other_char):
+                        return True
+                    else:
+                        return False
+
+                # 若整数部分相等,
+                # 则当且仅当 other 的小数部分为 0 时，self.num < other == False
+                return True \
+                    if other_dec or other_dec == '0' \
+                    else False
+
+            if len(self_int) > len(other_int):
+                return True
+            elif len(self_int) < len(other_int):
+                return False
+
+            for self_char, other_char in zip(self_int, other_int):
+                if self_char == other_char:
+                    continue
+                if int(self_char) > int(other_char):
+                    return True
+                else:
+                    return False
+
+            # 若整数部分相等, 比较小数部分
+            # 小数部分长度不相等时，要补齐
+            max_len = max(len(self_dec), len(other_dec))
+
+            self_dec += '0' * (max_len - len(self_dec))
+            other_dec += '0' * (max_len - len(other_dec))
+
+            for self_char, other_char in zip(self_dec, other_dec):
+                if self_char == other_char:
+                    continue
+                if int(self_char) > int(other_char):
+                    return True
+                else:
+                    return False
+
+            return False
 
 
 def __ne(self: LongReal, other: LongReal) -> bool:
