@@ -340,6 +340,9 @@ class HighPrecisionAlgorithms:
                 mymodule.api.exceptions.IndefiniteError: 除数、被除数都为 0
                 ZeroDivisionError: 除数为 0
             """
+            from ..exceptions import DisableError
+            raise DisableError('还没写完呢')
+
             if b == 0:
                 if a == 0:
                     try:
