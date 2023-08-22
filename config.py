@@ -62,28 +62,29 @@ class Config:
         self.default_config = default_config
 
     def check(self, config: dict, default_config: dict) -> None:
-        def recursive_check(config: dict, default_config: dict):
-            for key, value in default_config.items():
-                if key not in config:
+        def recursive_check(__config: dict, __default_config: dict):
+            for key, value in __default_config.items():
+                if key not in __config:
                     logger.warning(f'检测到配置错误: 配置文件缺少 {key}')
                     logger.warning('使用默认值代替')
-                    config[key] = value
-                elif not isinstance(config[key], type(value)):
+                    __config[key] = value
+                elif not isinstance(__config[key], type(value)):
                     try:
                         raise TypeError(f'配置文件中键 {key} 的值不是 {type(value)} 类型数据')
                     except TypeError as e:
                         logger.catch_exc('捕捉异常：TypeError')
                         logger.catch_exc(e)
                         logger.warning('检测到配置错误，使用默认值代替')
-                        config[key] = value
-                elif type(value) == type(config[key]) == dict:
-                    recursive_check(config[key], value)
+                        __config[key] = value
+                elif isinstance(value, dict) and isinstance(__config[key], dict):
+                    recursive_check(__config[key], value)
 
         recursive_check(config, default_config)
         self.save()
 
     def create_default_config(self) -> None:
-        if not os.path.exists(self.path): os.mkdir(self.path)
+        if not os.path.exists(self.path):
+            os.mkdir(self.path)
         with open(self.path + self.cfg_file_name, 'w', encoding='utf-8') as f:
             yaml.dump(self.default_config, f, allow_unicode=True)
 
@@ -120,24 +121,24 @@ class Config:
             yaml.dump(self.config, f, allow_unicode=True)
 
     def update_config_value(self, key, value) -> None:
-        def recursive_update(cfg, key_list, value):
-            if len(key_list) == 1:
-                cfg[key_list[0]] = value
+        def recursive_update(cfg, __key_list, __value):
+            if len(__key_list) == 1:
+                cfg[__key_list[0]] = __value
             else:
                 recursive_update(
-                    cfg[key_list[0]], key_list[1:], value
+                    cfg[__key_list[0]], __key_list[1:], __value
                 )
 
         key_list = key.split('.')
         recursive_update(self.config, key_list, value)
 
     def get_value(self, key) -> any:
-        def recursive_get(cfg, key_list):
-            if len(key_list) == 1:
-                return cfg[key_list[0]]
+        def recursive_get(cfg, __key_list):
+            if len(__key_list) == 1:
+                return cfg[__key_list[0]]
             else:
                 return recursive_get(
-                    cfg[key_list[0]], key_list[1:]
+                    cfg[__key_list[0]], __key_list[1:]
                 )
 
         key_list = key.split('.')
