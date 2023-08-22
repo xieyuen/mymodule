@@ -2,10 +2,10 @@ from typing import Any, Generator, Iterable, Iterator, Callable
 
 
 __all__ = [
-    'isInteger',
+    'isInt',
     'isFloat',
     'isComplex',
-    'isString',
+    'isStr',
     'isList',
     'isTuple',
     'isDict',
@@ -19,7 +19,7 @@ __all__ = [
 ]
 
 
-def isInteger(x: Any) -> bool: return isinstance(x, int)
+def isInt(x: Any) -> bool: return isinstance(x, int)
 
 
 def isFloat(x: Any) -> bool: return isinstance(x, float)
@@ -28,7 +28,7 @@ def isFloat(x: Any) -> bool: return isinstance(x, float)
 def isComplex(x: Any) -> bool: return isinstance(x, complex)
 
 
-def isString(x: Any) -> bool: return isinstance(x, str)
+def isStr(x: Any) -> bool: return isinstance(x, str)
 
 
 def isList(x: Any) -> bool: return isinstance(x, list)

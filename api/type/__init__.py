@@ -1,11 +1,11 @@
 from ...type.base import \
-	isInteger, isFloat, isComplex, isString, \
+	isInt, isFloat, isComplex, isStr, \
 	isList, isTuple, isDict, isSet, \
 	isCallable, isIterable, isIterator, \
 	isGenerator, isBool, isNone
 
 from ...type.cname import \
-	isInt, isStr, isNum, isDictionary, \
+	isInteger, isString, isNum, isDictionary, \
 	isChar, isMap, isBoolean
 
 from ...type.extra import \
@@ -18,7 +18,7 @@ __all__ = [
 	#    Base Function
 	# -------------------
 
-	'isInteger', 'isFloat', 'isComplex', 'isString',
+	'isInt', 'isFloat', 'isComplex', 'isStr',
 	'isList', 'isTuple', 'isDict', 'isSet', 'isBool',
 	'isCallable', 'isIterable', 'isIterator', 'isGenerator',
 	'isNone',
@@ -36,6 +36,6 @@ __all__ = [
 	#    Canonical Name
 	# --------------------
 
-	'isInt', 'isStr', 'isNum', 'isDictionary', 'isChar',
+	'isInteger', 'isString', 'isNum', 'isDictionary', 'isChar',
 	'isMap', 'isBoolean',
 ]

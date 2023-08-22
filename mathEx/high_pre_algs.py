@@ -371,4 +371,3 @@ class HighPrecisionAlgorithms:
                     while int(a_str[:i]) // b == 0:
                         i += 1
                     res.append(int(a_str[:i]) // b)
-
