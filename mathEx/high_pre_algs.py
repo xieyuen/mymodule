@@ -321,10 +321,51 @@ class HighPrecisionAlgorithms:
                 return self.int(int(a), int(b))
             return self.float(float(a), float(b))
 
-    def divide_int(self, a: int, b: int) -> int:
-        """高精度除法(整数)"""
-        if not (type(a) == type(b) == int):
-            raise TypeError("输入必须为整数 Input must be an integer.")
+    class Divide:
+        def int(self, a: int, b: int) -> float:
+            """
+            高精度除法(整数)
 
-        from ..exceptions import DisableError
-        raise DisableError('未写好的方法')
+            Args:
+                :param a: 被除数
+                :param b: 除数
+
+            Returns:
+                math.inf 当除数为 0 且被除数不是 0 时
+                math.nam 当除数为 0 且被除数为 0 时
+                float: 结果
+
+            Raises:
+                TypeError: 参数不是整数
+                mymodule.api.exceptions.IndefiniteError: 除数、被除数都为 0
+                ZeroDivisionError: 除数为 0
+            """
+            if b == 0:
+                if a == 0:
+                    try:
+                        from math import nan
+                        return nan
+                    except ImportError:
+                        from ..exceptions import IndefiniteError
+                        raise IndefiniteError('0 比 0 是不定式/未定式')
+                try:
+                    from math import inf
+                    return inf
+                except ImportError:
+                    raise ZeroDivisionError('除数不能为 0！')
+
+            if not (type(a) == type(b) == int):
+                raise TypeError("输入必须为整数 Input must be an integer.")
+
+            res = []
+
+            a_str = str(a)
+            b_str = str(b)
+
+            i = 0
+            while i < len(a_str):
+                for _ in a_str:
+                    while int(a_str[:i]) // b == 0:
+                        i += 1
+                    res.append(int(a_str[:i]) // b)
+
