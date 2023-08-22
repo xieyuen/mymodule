@@ -12,6 +12,16 @@ class HighPrecisionAlgorithms:
         def int(self, a: int, b: int) -> int:
             """
             高精度加法(整数)
+
+            Args:
+                a (int): 第一个加数
+                b (int): 第二个加数
+
+            Returns:
+                int: 两个加数之和
+
+            Raises:
+                TypeError: 输入必须为整数 Input must be an integer.
             """
             if not (type(a) == type(b) == int):
                 raise TypeError("输入必须为整数 Input must be an integer.")
@@ -45,6 +55,16 @@ class HighPrecisionAlgorithms:
         def float(self, a: float, b: float) -> float:
             """
             高精度计算(小数/浮点数)
+
+            Args:
+                a (float): 第一个数
+                b (float): 第二个数
+
+            Returns:
+                float: 计算结果
+
+            Raises:
+                TypeError: 输入必须为小数 Input must be a float.
             """
             if not (type(a) == type(b) == float):
                 raise TypeError("输入必须为小数 Input must be a float.")
@@ -80,7 +100,15 @@ class HighPrecisionAlgorithms:
             """
             高精度加法——自动匹配算法
             允许输入两个数字(不分整数小数)
+
+            Raises:
+                TypeError: 输入必须为整数 Input must be a number.
             """
+            from ..type.extra import isNumber
+
+            if not isNumber(a) or not isNumber(b):
+                raise TypeError("输入必须为整数 Input must be a number.")
+
             if type(a) == type(b) == int:
                 return self.int(a, b)
             if int(a) == a and int(b) == b:
@@ -91,6 +119,16 @@ class HighPrecisionAlgorithms:
         def int(self, a: int, b: int) -> int:
             """
             高精度减法(整数)
+
+            Args:
+                a (int): 被减数
+                b (int): 减数
+
+            Returns:
+                int: 结果
+
+            Raises:
+                TypeError: 输入必须为整数 Input must be an integer.
             """
             if not (type(a) == type(b) == int):
                 raise TypeError("输入必须为整数 Input must be an integer.")
@@ -121,6 +159,16 @@ class HighPrecisionAlgorithms:
         def float(self, a: float, b: float) -> float:
             """
             高精度减法(小数/浮点数)
+
+            Args:
+                a (float): 被减数
+                b (float): 减数
+
+            Returns:
+                float: 结果
+
+            Raises:
+                TypeError: 输入必须为小数 Input must be a float.
             """
             if not (type(a) == type(b) == float):
                 raise TypeError("输入必须为小数 Input must be a float.")
@@ -161,6 +209,16 @@ class HighPrecisionAlgorithms:
         def int(self, a: int, b: int) -> int:
             """
             高精度乘法(整数)
+
+            Args:
+                a: 第一个数
+                b: 第二个数
+
+            Returns:
+                int: 两个数的积
+
+            Raises:
+                TypeError: 输入必须为整数 Input must be an integer.
             """
             if not (type(a) == type(b) == int):
                 raise TypeError("输入必须为整数 Input must be an integer.")
@@ -199,7 +257,19 @@ class HighPrecisionAlgorithms:
             return sym * res
 
         def float(self, a: float, b: float) -> float:
-            """高精度乘法(小数)"""
+            """
+            高精度乘法(小数)
+
+            Args:
+                a (float): 第一个浮点数
+                b (float): 第二个浮点数
+
+            Returns:
+                float: 两个浮点数的积
+
+            Raises:
+                TypeError: 输入必须为小数 Input must be a float.
+            """
             if not (type(a) == type(b) == float):
                 raise TypeError("输入必须为小数 Input must be a float.")
 
