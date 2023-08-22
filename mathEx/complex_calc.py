@@ -8,6 +8,16 @@ def complex_triangular_to_general(r: int | float, theta: int | float) -> complex
     return re + im * 1j
 
 
+def complex_general_to_triangular(x: complex) -> tuple[int | float, int | float]:
+    """复数的一般形式转三角形式"""
+    r = sqrt(x.imag ** 2 + x.real ** 2)
+    if x.real == 0:
+        arg = pi / 2 if x.imag > 0 else -pi / 2
+    else:
+        arg = atan(x.imag / x.real)
+    return r, arg
+
+
 def complex_sqrt(x: complex | int | float) -> complex | float:
     """复数开平方"""
     # 数值分离：
