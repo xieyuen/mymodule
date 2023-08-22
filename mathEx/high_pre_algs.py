@@ -1,3 +1,6 @@
+from typing import Union
+
+
 class HighPrecisionAlgorithms:
     """
     高精度算法
@@ -96,7 +99,7 @@ class HighPrecisionAlgorithms:
             res = f"{res_int}.{res_dec}"
             return float(res)
 
-        def __call__(self, a: int | float, b: int | float) -> int | float:
+        def __call__(self, a: Union[int, float], b: Union[int, float]) -> Union[int, float]:
             """
             高精度加法——自动匹配算法
             允许输入两个数字(不分整数小数)
@@ -194,7 +197,7 @@ class HighPrecisionAlgorithms:
             res = float(f"{res_int}.{res_dec}")
             return res
 
-        def __call__(self, a: int | float, b: int | float) -> int | float:
+        def __call__(self, a: Union[int, float], b: Union[int, float]) -> Union[int, float]:
             """
             高精度减法——自动匹配算法
             允许输入两个数字(不分整数小数)
@@ -307,7 +310,7 @@ class HighPrecisionAlgorithms:
 
             return sym * float(res)
 
-        def __call__(self, a: int | float, b: int | float) -> int | float:
+        def __call__(self, a: Union[int, float], b: Union[int, float]) -> Union[int, float]:
             """
             高精度乘法——自动匹配算法
             允许输入两个数字(不分整数小数)
