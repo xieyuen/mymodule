@@ -45,5 +45,5 @@ class FileError(Exception):
     ...
 
 
-class ZeroDivZeroError(ZeroDivisionError):
+class IndefiniteError(Exception):
     ...
