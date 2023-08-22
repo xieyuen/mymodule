@@ -2,13 +2,13 @@ from math import sin, cos, atan, sqrt, pi
 
 
 def complex_triangular_to_general(r: int | float, theta: int | float) -> complex:
-    Re = r * cos(theta)
-    Im = r * sin(theta)
-    return Re + Im * 1j
+    """复数的三角形式转一般形式"""
+    re = r * cos(theta)
+    im = r * sin(theta)
+    return re + im * 1j
 
 
-def complex_sqrt(x: complex|int|float) -> complex|float:
-    '''复数开平方'''
+def complex_sqrt(x: complex | int | float) -> complex | float:
     """复数开平方"""
     # 数值分离：
     # 非负数直接使用 math.sqrt()
