@@ -1,9 +1,11 @@
 # Exceptions
 
-class UndefinedError(Exception): ...
+class UndefinedError(Exception):
+    ...
 
 
-class DisableError(Exception): ...
+class DisableError(Exception):
+    ...
 
 
 # Unknown Exceptions
@@ -40,4 +42,8 @@ class Finish(Exception):
 
 
 class FileError(Exception):
+    ...
+
+
+class ZeroDivZeroError(ZeroDivisionError):
     ...
