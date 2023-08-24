@@ -12,7 +12,8 @@ class HighPrecisionAlgorithms:
         self.mul = self.multiply = self.multiplication = self.Multiplication()
 
     class Addition:
-        def int(self, a: int, b: int) -> int:
+        @staticmethod
+        def int(a: int, b: int) -> int:
             """
             高精度加法(整数)
 
@@ -119,7 +120,8 @@ class HighPrecisionAlgorithms:
             return self.float(float(a), float(b))
 
     class Subtraction:
-        def int(self, a: int, b: int) -> int:
+        @staticmethod
+        def int(a: int, b: int) -> int:
             """
             高精度减法(整数)
 
@@ -209,7 +211,8 @@ class HighPrecisionAlgorithms:
             return self.float(float(a), float(b))
 
     class Multiplication:
-        def int(self, a: int, b: int) -> int:
+        @staticmethod
+        def int(a: int, b: int) -> int:
             """
             高精度乘法(整数)
 
@@ -322,7 +325,8 @@ class HighPrecisionAlgorithms:
             return self.float(float(a), float(b))
 
     class Divide:
-        def int(self, a: int, b: int) -> float:
+        @staticmethod
+        def int(a: int, b: int) -> float:
             """
             高精度除法(整数)
 
