@@ -2,14 +2,13 @@
 配置文件，模板已写好，直接调用就行
 
 使用方法:
-使用前需要打下面三行代码
+使用前需要打下面两行行代码
 1. `from mymodule.config import Config`
-2. `config = Config()`
-3. `config.default_config = ...`
+2. `config = Config(default_config)`
 然后就可以用了
 
-`default_config`储存默认配置
-`config`储存读取的配置
+`config.default_config`储存默认配置
+`config.config`储存读取的配置
 
 一些方法：
 * load()                    读取配置文件，储存在config.config这个字典里
@@ -65,17 +64,14 @@ class Config:
         def recursive_check(__config: dict, __default_config: dict):
             for key, value in __default_config.items():
                 if key not in __config:
-                    logger.warning(f'检测到配置错误: 配置文件缺少 {key}')
-                    logger.warning('使用默认值代替')
+                    logger.error(f'配置错误: 配置文件缺少 {key}')
+                    logger.debug('使用默认值代替')
                     __config[key] = value
                 elif not isinstance(__config[key], type(value)):
-                    try:
-                        raise TypeError(f'配置文件中键 {key} 的值不是 {type(value)} 类型数据')
-                    except TypeError as e:
-                        logger.catch_exc('捕捉异常：TypeError')
-                        logger.catch_exc(e)
-                        logger.warning('检测到配置错误，使用默认值代替')
-                        __config[key] = value
+                    logger.catch_exc('捕捉异常：TypeError')
+                    logger.error(f'配置文件中键 {key} 的值不是 {type(value)} 类型数据')
+                    logger.debug('使用默认值代替')
+                    __config[key] = value
                 elif isinstance(value, dict) and isinstance(__config[key], dict):
                     recursive_check(__config[key], value)
 
@@ -146,3 +142,21 @@ class Config:
 
     def get_config(self) -> dict:
         return self.config
+
+    def __getitem__(self, key):
+        return self.config[key]
+
+    def __setitem__(self, key, value):
+        self.config[key] = value
+
+    def __delitem__(self, key):
+        del self.config[key]
+
+    def __len__(self):
+        return len(self.config)
+
+    def __iter__(self):
+        return iter(self.config)
+
+    def __contains__(self, item):
+        return item in self.config
