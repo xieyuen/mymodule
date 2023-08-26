@@ -1,6 +1,8 @@
 from typing import Tuple
 
 from real_num import Real
+from HPA.string import HighPrecisionAlgorithms as HPA
+hpa = HPA()
 
 
 class LongReal:
@@ -127,153 +129,6 @@ def __abs(self) -> LongReal: return LongReal(self.num)
 LongReal.__neg__ = __neg
 LongReal.__pos__ = __pos
 LongReal.__abs__ = __abs
-
-
-# --------------------------------------------------------------------------------------------------
-
-# 数学运算(加、减、乘、除、模等等)
-def __add(self, other: LongReal) -> LongReal:
-    return \
-        LongReal(self.num + other.num) \
-        if isinstance(other, LongReal) \
-        else (
-            LongReal(self.num + other)
-            if (isinstance(other, int) or isinstance(other, float))
-            else NotImplemented
-        )
-
-
-def __sub(self, other: LongReal) -> LongReal:
-    return \
-        LongReal(self.num - other.num)  \
-        if isinstance(other, LongReal) \
-        else (
-            LongReal(self.num - other)
-            if (isinstance(other, int) or isinstance(other, float))
-            else NotImplemented
-        )
-
-
-def __mul(self, other: LongReal) -> LongReal:
-    return \
-        LongReal(self.num * other.num)  \
-        if isinstance(other, LongReal) \
-        else (
-            LongReal(self.num * other)
-            if (isinstance(other, int) or isinstance(other, float))
-            else NotImplemented
-        )
-
-
-def __div(self, other: LongReal) -> LongReal:
-    return \
-        LongReal(self.num / other.num)  \
-        if isinstance(other, LongReal) \
-        else (
-            LongReal(self.num / other)
-            if (isinstance(other, int) or isinstance(other, float))
-            else NotImplemented
-        )
-
-
-def __floordiv(self, other: LongReal) -> LongReal:
-    return \
-        LongReal(self.num // other.num) \
-        if isinstance(other, LongReal) \
-        else (
-            LongReal(self.num // other)
-            if (isinstance(other, int) or isinstance(other, float))
-            else NotImplemented
-        )
-
-
-def __truediv(self, other: LongReal) -> LongReal:
-    return \
-        LongReal(self.num / other.num)  \
-        if isinstance(other, LongReal) \
-        else (
-            LongReal(self.num / other)
-            if (isinstance(other, int) or isinstance(other, float))
-            else NotImplemented
-        )
-
-
-def __mod(self, other: LongReal) -> LongReal:
-    return \
-        LongReal(self.num % other.num)  \
-        if isinstance(other, LongReal) \
-        else (
-            LongReal(self.num % other)
-            if (isinstance(other, int) or isinstance(other, float))
-            else NotImplemented
-        )
-
-
-def __pow(self, other: LongReal) -> LongReal:
-    return \
-        LongReal(self.num ** other.num) \
-        if isinstance(other, LongReal) \
-        else (
-            LongReal(self.num ** other)
-            if (isinstance(other, int) or isinstance(other, float))
-            else NotImplemented
-        )
-
-
-def __divmod(self, other: LongReal) -> Tuple[LongReal, LongReal]:
-    return self.__truediv__(other), self.__mod__(other)
-
-
-LongReal.__add__ = __add
-LongReal.__sub__ = __sub
-LongReal.__mul__ = __mul
-LongReal.__div__ = __div
-LongReal.__floordiv__ = __floordiv
-LongReal.__truediv__ = __truediv
-LongReal.__mod__ = __mod
-LongReal.__pow__ = __pow
-LongReal.__divmod__ = __divmod
-
-
-def __radd(self, other: LongReal) -> LongReal:
-    return self.__add__(other)
-
-
-def __rsub(self, other: LongReal) -> LongReal:
-    return self.__sub__(other)
-
-
-def __rmul(self, other: LongReal) -> LongReal:
-    return self.__mul__(other)
-
-
-def __rfloordiv(self, other: LongReal) -> LongReal:
-    return self.__floordiv__(other)
-
-
-def __rtruediv(self, other: LongReal) -> LongReal:
-    return self.__truediv__(other)
-
-
-def __rmod(self, other: LongReal) -> LongReal:
-    return self.__mod__(other)
-
-
-def __rpow(self, other: LongReal) -> LongReal:
-    return self.__pow__(other)
-
-
-def __rdivmod(self, other: LongReal) -> Tuple[LongReal, LongReal]: return self.__divmod__(other)
-
-
-LongReal.__radd__ = __radd
-LongReal.__rsub__ = __rsub
-LongReal.__rmul__ = __rmul
-LongReal.__rfloordiv__ = __rfloordiv
-LongReal.__rtruediv__ = __rtruediv
-LongReal.__rmod__ = __rmod
-LongReal.__rdivmod__ = __rdivmod
-LongReal.__rpow__ = __rpow
 
 # --------------------------------------------------------------------------------------------------
 
@@ -429,3 +284,146 @@ LongReal.__lt__ = __lt
 LongReal.__le__ = __le
 LongReal.__gt__ = __gt
 LongReal.__ge__ = __ge
+
+# --------------------------------------------------------------------------------------------------
+
+
+# 数学运算(加、减、乘、除、模等等)
+def __add(self: LongReal, other: LongReal) -> LongReal:
+    if self.sym == other.sym:
+        sym = self.sym
+        res = hpa.add(self.num, other.num)
+        return LongReal(sym + res)
+
+def __sub(self: LongReal, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num - other.num)  \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num - other)
+            if (isinstance(other, int) or isinstance(other, float))
+            else NotImplemented
+        )
+
+
+def __mul(self: LongReal, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num * other.num)  \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num * other)
+            if (isinstance(other, int) or isinstance(other, float))
+            else NotImplemented
+        )
+
+
+def __div(self: LongReal, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num / other.num)  \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num / other)
+            if (isinstance(other, int) or isinstance(other, float))
+            else NotImplemented
+        )
+
+
+def __floordiv(self: LongReal, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num // other.num) \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num // other)
+            if (isinstance(other, int) or isinstance(other, float))
+            else NotImplemented
+        )
+
+
+def __truediv(self: LongReal, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num / other.num)  \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num / other)
+            if (isinstance(other, int) or isinstance(other, float))
+            else NotImplemented
+        )
+
+
+def __mod(self: LongReal, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num % other.num)  \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num % other)
+            if (isinstance(other, int) or isinstance(other, float))
+            else NotImplemented
+        )
+
+
+def __pow(self: LongReal, other: LongReal) -> LongReal:
+    return \
+        LongReal(self.num ** other.num) \
+        if isinstance(other, LongReal) \
+        else (
+            LongReal(self.num ** other)
+            if (isinstance(other, int) or isinstance(other, float))
+            else NotImplemented
+        )
+
+
+def __divmod(self: LongReal, other: LongReal) -> Tuple[LongReal, LongReal]:
+    return self.__truediv__(other), self.__mod__(other)
+
+
+LongReal.__add__ = __add
+LongReal.__sub__ = __sub
+LongReal.__mul__ = __mul
+LongReal.__div__ = __div
+LongReal.__floordiv__ = __floordiv
+LongReal.__truediv__ = __truediv
+LongReal.__mod__ = __mod
+LongReal.__pow__ = __pow
+LongReal.__divmod__ = __divmod
+
+
+def __radd(self: LongReal, other: LongReal) -> LongReal:
+    return self.__add__(other)
+
+
+def __rsub(self: LongReal, other: LongReal) -> LongReal:
+    return self.__sub__(other)
+
+
+def __rmul(self: LongReal, other: LongReal) -> LongReal:
+    return self.__mul__(other)
+
+
+def __rfloordiv(self: LongReal, other: LongReal) -> LongReal:
+    return self.__floordiv__(other)
+
+
+def __rtruediv(self: LongReal, other: LongReal) -> LongReal:
+    return self.__truediv__(other)
+
+
+def __rmod(self: LongReal, other: LongReal) -> LongReal:
+    return self.__mod__(other)
+
+
+def __rpow(self: LongReal, other: LongReal) -> LongReal:
+    return self.__pow__(other)
+
+
+def __rdivmod(self: LongReal, other: LongReal) -> Tuple[LongReal, LongReal]: return self.__divmod__(other)
+
+
+LongReal.__radd__ = __radd
+LongReal.__rsub__ = __rsub
+LongReal.__rmul__ = __rmul
+LongReal.__rfloordiv__ = __rfloordiv
+LongReal.__rtruediv__ = __rtruediv
+LongReal.__rmod__ = __rmod
+LongReal.__rdivmod__ = __rdivmod
+LongReal.__rpow__ = __rpow
+
