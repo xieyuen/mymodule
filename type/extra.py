@@ -18,26 +18,12 @@ __all__ = [
 
 
 def isLongReal(x: Any) -> bool: return isinstance(x, LongReal)
-
-
 def isReal(x: Any) -> bool: return isInt(x) or isFloat(x) or isLongReal(x) or isinstance(x, Real)
-
-
 def isNumber(x: Any) -> bool: return isComplex(x) or isReal(x)
-
-
 def isEmpty(x: Any) -> bool: return (not x) if isStr(x) or isDict(x) or isList(x) or isTuple(x) else False
-
-
 def isNumNoBool(x: Any) -> bool: return isNumber(x) and not isBool(x)
-
-
 def isCanFor(x: Any) -> bool: return isIterable(x)
-
-
 def isImmutable(x: Any) -> bool: return isNumber(x) or isTuple(x) or isStr(x)
-
-
 def isCharacter(x: Any) -> bool: return len(x) == 1 if isStr(x) else False
 
 

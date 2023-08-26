@@ -12,24 +12,12 @@ __all__ = [
 
 # Base Functions
 def isInteger(x: Any) -> bool: return isInt(x)
-
-
 def isString(x: Any) -> bool: return isStr(x)
-
-
 def isDictionary(x: Any) -> bool: return isDict(x)
-
-
 def isBoolean(x: Any) -> bool: return isBool(x)
 
 
 # Extra Functions
 def isNum(x: Any) -> bool: return isNumber(x)
-
-
 def isChar(x: Any) -> bool: return isCharacter(x)
-
-
 def isMap(x: Any) -> bool: return isDict(x)
-
-

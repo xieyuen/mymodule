@@ -7,8 +7,8 @@ class LongReal:
     """
     这是用来储存大数的实数类
 
-    :param:`num` str, 储存数
-    :param:`sym` str, 储存数的符号
+    :param num: 储存数
+    :param sym: 储存数的符号
     """
     num: str
     sym: str
@@ -19,7 +19,7 @@ class LongReal:
 # --------------------------------------------------------------------------------------------------
 
 # init 函数
-def __init(self, num: int | float | str | Real | LongReal) -> LongReal:
+def __init(self: LongReal, num: int | float | str | Real | LongReal) -> LongReal:
     if (
         type(num) != int and
         type(num) != float and
