@@ -1,7 +1,7 @@
-from ...mathEx.complex_calc import complex_sqrt, complex_triangular_to_general
-from ...mathEx.HPA.number import HighPrecisionAlgorithms as numberHPA
-from ...mathEx.real_num import Real
-from ...mathEx.long_real import LongReal
+from ...math_ex.complex_calc import complex_sqrt, complex_triangular_to_general
+from ...math_ex.HPA.number import HighPrecisionAlgorithms as numberHPA
+from ...math_ex.real_num import Real
+from ...math_ex.long_real import LongReal
 
 
 __all__ = [
