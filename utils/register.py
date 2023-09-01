@@ -6,8 +6,8 @@ from .logger import logger
 def __f(): pass
 
 
-__all__ = ["Register", 'funcs', 'classes']
-Function = type(__f)
+__all__ = ["Register", 'functions', 'classes']
+FunctionType = type(__f)
 
 
 class Register(dict):
@@ -56,5 +56,5 @@ class Register(dict):
             print(f"{k}: {v.__name__}")
 
 
-funcs = Register()
+functions = Register()
 classes = Register()

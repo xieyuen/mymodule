@@ -32,7 +32,7 @@ def isBuiltin(x: Any) -> bool: return x.__module__ == 'builtins'
 
 
 def isDouble(x: Any) -> bool:
-    from .. import logger
+    from ..utils import logger
     logger.error("Python 不支持 Double 类型 | Double type is not supported in Python")
     logger.warning("调用 isFloat 进行判断")
     return isFloat(x)
