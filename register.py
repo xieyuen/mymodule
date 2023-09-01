@@ -1,54 +1,22 @@
-from typing import List, Tuple, Any
+from typing import Any, Callable
 
 from .logger import logger
 
 
+def __f(): pass
+
+
 __all__ = ["Register", 'funcs', 'classes']
+Function = type(__f)
 
 
 class Register(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._dict = {}
+        self._dict: dict[str, callable] = {}
 
-    def __call__(self, target):
-        return self.register(target)
-
-    def __setitem__(self, key, value):
-        self._dict[key] = value
-
-    def __getitem__(self, key):
-        return self._dict[key]
-
-    def __contains__(self, key):
-        return key in self._dict
-
-    def __str__(self):
-        return str(self._dict)
-
-    def keys(self):
-        return self._dict.keys()
-
-    def values(self):
-        return self._dict.values()
-
-    def items(self):
-        return self._dict.items()
-
-    def get(self, key, default=None) -> Any:
-        return self._dict.get(key, default)
-
-    def setdefault(self, key, default=None) -> Any:
-        return self._dict.setdefault(key, default)
-
-    def pop(self, key, default=None):
-        return self._dict.pop(key, default)
-
-    def clear(self):
-        return self._dict.clear()
-
-    def register(self, target) -> callable:
-        def add_register_item(name, func: callable) -> callable:
+    def register(self, target) -> Callable:
+        def add_register_item(name, func: callable) -> Callable:
             if not callable(func):
                 raise TypeError(f"Register object must be callable! But receice:{func} is not callable!")
             if name in self._dict:
@@ -67,8 +35,25 @@ class Register(dict):
             # 那么 `reg(name)` 就要返回一个函数，用 `lambda` 正好
             return lambda func: add_register_item(target, func)
 
-    def reg(self, target):
-        return self.register(target)
+    def __call__(self, target): return self.register(target)
+    def __setitem__(self, key, value): self._dict[key] = value
+    def __getitem__(self, key): return self._dict[key]
+    def __contains__(self, key): return key in self._dict
+    def __str__(self): return str(self._dict)
+    def keys(self): return self._dict.keys()
+    def values(self): return self._dict.values()
+    def items(self): return self._dict.items()
+    def get(self, key, default=None) -> Any: return self._dict.get(key, default)
+    def setdefault(self, key, default=None) -> Any: return self._dict.setdefault(key, default)
+    def pop(self, key, default=None): return self._dict.pop(key, default)
+    def clear(self): return self._dict.clear()
+    def reg(self, target): return self.register(target)
+    def get_args(self, func_name): return self._dict[func_name].__code__.co_varnames[:func_name.__code__.co_argcount]
+    def get_kwargs(self, func_name): return self._dict[func_name].__code__.co_varnames[func_name.__code__.co_argcount:]
+
+    def print_all(self):
+        for k, v in self._dict.items():
+            print(f"{k}: {v.__name__}")
 
 
 funcs = Register()
