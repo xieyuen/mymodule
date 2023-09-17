@@ -1,6 +1,5 @@
-from typing import Tuple, Self, TypeVar
+from typing import Tuple, TypeVar
 
-from real_num import Real
 from HPA.string import HighPrecisionAlgorithms as Hpa
 
 
@@ -13,19 +12,18 @@ class LongReal:
     这是用来储存大数的实数类
 
     Attributes:
-        num: 储存数
+        abs: 储存数
         sym: 储存数的符号
     """
-    num: str
+    abs: str
     sym: str
 
-    def __init__(self, num: int | float | str | Real | Self):
-        if (
-            type(num) is not int and
-            type(num) is not float and
-            type(num) is not str and
-            type(num) is not Real and
-            type(num) is not LongReal
+    def __init__(self, num: int | float | str | LR):
+        if not (
+            isinstance(num, int) or
+            isinstance(num, float) or
+            isinstance(num, str) or
+            isinstance(num, LongReal)
         ):
             raise TypeError('LongReal 类只能使用 int/float/str/Real/LongReal 类型对象进行初始化')
 
@@ -35,13 +33,7 @@ class LongReal:
 
         # LongReal
         if isinstance(num, LongReal):
-            self.sym, self.num = num.sym, num.num
-            return
-
-        # Real
-        if isinstance(num, Real):
-            self.num = str(num)
-            self.sym = '+' if int(num) > 0 else '-'
+            self.sym, self.abs = num.sym, num.abs
             return
 
         try:
@@ -50,67 +42,63 @@ class LongReal:
             # 在这里，所有类似 '-1-1'、'12345--++1765' 等等无法转化为数字的 str 都会被挑出来
             raise ValueError('你输入的对象不是数字！')
 
-        old_type = type(num)  # 将 type 记录，之后还原type
-        num = str(num)
+        num_str = str(num)
         # 判断符号
-        if num[0] == '-':
+        if num_str[0] == '-':
             self.sym = '-'
-            num = num[1:]
-        elif num[0] == '+':
+            num_str = num_str[1:]
+        elif num_str[0] == '+':
             self.sym = '+'
-            num = num[1:]
+            num_str = num_str[1:]
         else:
             self.sym = '+'
+
+        num = type(num)(num_str)
 
         # 去下划线 (_)
         if '_' in num:
             num = num.replace('_', '')
 
-        num = old_type(num)  # 将 num 转化为原来的 type
-
         if isinstance(num, str):
-            self.num = num
+            self.abs = num
         elif int(num) == float(num):
-            self.num = str(int(num))
+            self.abs = str(int(num))
         else:
             num = str(num)
             if num[-1] == '.':
                 num += '0'
             if num[0] == '.':
                 num = '0' + num
-            self.num = num
+            self.abs = num
 
-    def __repr__(self): return f'LongReal({self.sym + self.num})'
+    def __repr__(self): return f'LongReal({self.sym + self.abs})'
 
     # --- int, float, str, bool 方法的定义 --- #
-    def __int__(self) -> int: return int(self.sym + self.num)
-    def __float__(self) -> float: return float(self.sym + self.num)
-    def __str__(self) -> str: return self.sym + self.num
-    def __bool__(self) -> bool: return True if self.num != '' else False
+    def __int__(self) -> int: return int(self.sym + self.abs)
+    def __float__(self) -> float: return float(self.sym + self.abs)
+    def __str__(self) -> str: return self.sym + self.abs
+    def __bool__(self) -> bool: return True if self.abs != '0' else False
 
     # --- 基础一元运算和绝对值 --- #
-    def __neg__(self) -> LR: return LongReal("-" + self.num)
-    def __pos__(self) -> LR: return LongReal(self)
-    def __abs__(self) -> LR: return LongReal(self.num)
+    def __neg__(self) -> LR: return LongReal("-" + self.abs) if self.sym == "+" else LongReal(self.abs)
+    def __pos__(self) -> LR: return self
+    def __abs__(self) -> LR: return LongReal(self.abs)
 
     # --- 比较运算 --- #
-    def __eq__(self, other: int | float | Real | LR) -> bool:
-        return (self.num == other.num and self.sym == other.sym) \
+    def __eq__(self, other: int | float | LR) -> bool:
+        return (self.abs == other.abs and self.sym == other.sym) \
             if isinstance(other, LongReal) \
             else (
             (
-                    (self.sym + self.num) == str(other)
-            ) if isinstance(other, int) or isinstance(other, float) or isinstance(other, Real)
+                (self.sym + self.abs) == str(other)
+            ) if isinstance(other, int) or isinstance(other, float)
             else NotImplemented
         )
 
-    def __lt__(self, other: int | float | Real | LR) -> bool:
-        if isinstance(other, LongReal) or isinstance(other, Real):
-            if isinstance(other, Real):
-                other = LongReal(other)
-
+    def __lt__(self, other: int | float | LR) -> bool:
+        if isinstance(other, LongReal):
             if self.sym == other.sym:  # 符号是否相同
-                return self.num < other.num
+                return self.abs < other.abs
 
             else:
                 # 符号不同正为大
@@ -130,31 +118,13 @@ class LongReal:
                 if self.sym == '+':
                     return True
 
-                if len(self.num) != len(other_str):
-                    return True if len(self.num) > len(other_str) else False
-
-                for self_char, other_char in zip(self.num, other_str):
-                    if self_char == other_char:
-                        continue
-                    if int(self_char) > int(other_char):
-                        return True
-                    else:
-                        return False
+                return self.abs > other_str
 
             else:  # >0
                 if self.sym == '-':
                     return True
 
-                if len(self.num) != len(other_str):
-                    return True if len(self.num) < len(other_str) else False
-
-                for self_char, other_char in zip(self.num, other_str):
-                    if self_char == other_char:
-                        continue
-                    if int(self_char) < int(other_char):
-                        return True
-                    else:
-                        return False
+                return self.abs < other_str
 
         if isinstance(other, float):
             other_int, other_dec = str(other).split('.')
@@ -167,16 +137,16 @@ class LongReal:
                 other_int = other_int[1:]
 
                 try:
-                    self_int, self_dec = self.num.split('.')
+                    self_int, self_dec = self.abs.split('.')
                 except ValueError:
                     # 当 self.num 是一个整数时
                     # 对整数部分先比较
-                    if len(self.num) > len(other_int):
+                    if len(self.abs) > len(other_int):
                         return True
-                    elif len(self.num) < len(other_int):
+                    elif len(self.abs) < len(other_int):
                         return False
 
-                    for self_char, other_char in zip(self.num, other_int):
+                    for self_char, other_char in zip(self.abs, other_int):
                         if self_char == other_char:
                             continue
                         if int(self_char) > int(other_char):
@@ -186,9 +156,9 @@ class LongReal:
 
                     # 若整数部分相等,
                     # 则当且仅当 other 的小数部分为 0 时，self.num < other == False
-                    return True \
-                        if other_dec or other_dec == '0' \
-                        else False
+                    return False \
+                        if other_dec == '0' \
+                        else True
 
                 if len(self_int) > len(other_int):
                     return True
@@ -231,17 +201,14 @@ class LongReal:
             isinstance(other, int) or
             isinstance(other, float)
         ):
-            return self + LR(other)
+            return self + LongReal(other)
 
-        if (
-            str(type(other)) != "<class 'mymodule.math_ex.long_real.LongReal'>"
-            or str(type(other)) != "<class '__main__.LongReal'>"
-        ):
+        if not isinstance(other, LongReal):
             return NotImplemented
 
         if self.sym == other.sym:
             sym = self.sym
-            res = HPA.add(self.num, other.num)
+            res = HPA.add(self.abs, other.abs)
             return LongReal(sym + res)
         elif self.sym == '+':
             return self - other
