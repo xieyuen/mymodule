@@ -7,7 +7,6 @@ from .base import \
     isDict, isList
 
 from ..math_ex.long_real import LongReal
-from ..math_ex.real_num import Real
 from .new_type import Array
 
 
@@ -20,7 +19,7 @@ __all__ = [
 
 
 def isLongReal(x: Any) -> bool: return isinstance(x, LongReal)
-def isReal(x: Any) -> bool: return isInt(x) or isFloat(x) or isLongReal(x) or isinstance(x, Real)
+def isReal(x: Any) -> bool: return isInt(x) or isFloat(x) or isLongReal(x)
 def isNumber(x: Any) -> bool: return isComplex(x) or isReal(x)
 def isEmpty(x: Any) -> bool: return (not x) if isStr(x) or isDict(x) or isList(x) or isTuple(x) else False
 def isNumNoBool(x: Any) -> bool: return isNumber(x) and not isBool(x)
