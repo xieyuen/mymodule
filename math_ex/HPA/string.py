@@ -1,3 +1,6 @@
+from typing import Union
+
+
 class HighPrecisionAlgorithms:
     def __init__(self):
         self.add = self.Addition()
@@ -42,7 +45,7 @@ class HighPrecisionAlgorithms:
 
             # 进行进位计算
             for index in range(len(res)):
-                res[index] = num1[index] + num2[index]
+                res[index] += num1[index] + num2[index]
                 if res[index] > 9:  # 进位
                     res[index] -= 10
                     res[index + 1] += 1

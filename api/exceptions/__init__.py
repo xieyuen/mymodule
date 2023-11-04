@@ -1,4 +1,4 @@
-from ...exceptions import \
+from utils.exceptions import \
 	UndefinedError, DisableError, UnknownArgumentError, \
 	UnknownFunctionError, UnknownMethodError, UnknownCommandError, \
 	UnknownCommandNodeError, InvalidArgumentError, CommandParseError, \

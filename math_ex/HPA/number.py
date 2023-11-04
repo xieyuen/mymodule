@@ -344,7 +344,7 @@ class HighPrecisionAlgorithms:
                 mymodule.api.exceptions.IndefiniteError: 除数、被除数都为 0
                 ZeroDivisionError: 除数为 0
             """
-            from ...exceptions import DisableError
+            from utils.exceptions import DisableError
             raise DisableError('还没写完呢')
 
             if b == 0:
@@ -353,7 +353,7 @@ class HighPrecisionAlgorithms:
                         from math import nan
                         return nan
                     except ImportError:
-                        from ...exceptions import IndefiniteError
+                        from utils.exceptions import IndefiniteError
                         raise IndefiniteError('0 比 0 是不定式/未定式')
                 try:
                     from math import inf

@@ -52,8 +52,6 @@ class Config:
 
     default_config = {}
     config = {}
-    path: str
-    cfg_file_name: str
 
     def __init__(self, default_config, path: str = './', cfg_file_name: str = 'config.yml'):
         self.path = path
@@ -61,7 +59,7 @@ class Config:
         self.default_config = default_config
 
     def check(self, config: dict, default_config: dict) -> None:
-        def recursive_check(__config: dict, __default_config: dict):
+        def recursive(__config: dict, __default_config: dict):
             for key, value in __default_config.items():
                 if key not in __config:
                     logger.error(f'配置错误: 配置文件缺少 {key}')
@@ -73,9 +71,9 @@ class Config:
                     logger.debug('使用默认值代替')
                     __config[key] = value
                 elif isinstance(value, dict) and isinstance(__config[key], dict):
-                    recursive_check(__config[key], value)
+                    recursive(__config[key], value)
 
-        recursive_check(config, default_config)
+        recursive(config, default_config)
         self.save()
 
     def create_default_config(self) -> None:

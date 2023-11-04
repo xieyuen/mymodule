@@ -18,7 +18,7 @@ class Register(dict):
     def register(self, target) -> Callable:
         def add_register_item(name, func: callable) -> Callable:
             if not callable(func):
-                raise TypeError(f"Register object must be callable! But receice:{func} is not callable!")
+                raise TypeError(f"Register object must be callable! But receive:{func} is not callable!")
             if name in self._dict:
                 logger.warning(f"Function:`{func.__name__}()` has been registered before, so we will overriden it")
             self[name] = func
@@ -29,11 +29,10 @@ class Register(dict):
             # 装饰器就会像这样: `func = reg(func)`
             # 我们就以传入的函数或者类的名字作为注册名
             return add_register_item(target.__name__, target)
-        else:
-            # 如果不可调用，说明额外说明了注册的可调用对象的名字
-            # 也就是变成 `func = reg(name)(func)`
-            # 那么 `reg(name)` 就要返回一个函数，用 `lambda` 正好
-            return lambda func: add_register_item(target, func)
+        # 如果不可调用，说明额外说明了注册的可调用对象的名字
+        # 也就是变成 `func = reg(name)(func)`
+        # 那么 `reg(name)` 就要返回一个函数，用 `lambda` 正好
+        return lambda func: add_register_item(target, func)
 
     def __call__(self, target): return self.register(target)
     def __setitem__(self, key, value): self._dict[key] = value
