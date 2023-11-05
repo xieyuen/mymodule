@@ -1,14 +1,10 @@
-from typing import Any, Iterable
+from numbers import Number, Real
 from types import FunctionType, MethodType, BuiltinMethodType, BuiltinFunctionType
+from typing import Any, Iterable, Container, Hashable
 
-from .base import \
-    isInt, isFloat, isStr, isTuple, \
-    isComplex, isBool, isIterable, \
-    isDict, isList
-
-from ..math_ex.long_real import LongReal
+from .base import isStr, isBool, isIterable
 from .new_type import Array
-
+from ..math_ex.long_real import LongReal
 
 __all__ = [
     'isLongReal', 'isReal', 'isNumber', 'isEmpty',
@@ -19,22 +15,40 @@ __all__ = [
 
 
 def isLongReal(x: Any) -> bool: return isinstance(x, LongReal)
-def isReal(x: Any) -> bool: return isInt(x) or isFloat(x) or isLongReal(x)
-def isNumber(x: Any) -> bool: return isComplex(x) or isReal(x)
-def isEmpty(x: Any) -> bool: return (not x) if isStr(x) or isDict(x) or isList(x) or isTuple(x) else False
+
+
+def isReal(x: Any) -> bool: return isinstance(x, Real) or isLongReal(x)
+
+
+def isNumber(x: Any) -> bool: return isinstance(x, Number) or isLongReal(x)
+
+
+def isEmpty(x: Any) -> bool: return len(x) == 0
+
+
+def isContainer(x: Any) -> bool: return isinstance(x, Container)
+
+
 def isNumNoBool(x: Any) -> bool: return isNumber(x) and not isBool(x)
+
+
 def isCanFor(x: Any) -> bool: return isIterable(x)
+
+
 def isCharacter(x: Any) -> bool: return len(x) == 1 if isStr(x) else False
+
+
 def isMethod(x: Any) -> bool: return isinstance(x, MethodType) or isinstance(x, BuiltinMethodType)
+
+
 def isFunction(x: Any) -> bool: return isinstance(x, FunctionType) or isinstance(x, BuiltinFunctionType) or isMethod(x)
+
+
 def isBuiltin(x: Any) -> bool: return x.__module__ == 'builtins'
 
 
-def isDouble(x: Any) -> bool:
-    from ..utils import logger
-    logger.error("Python 不支持 Double 类型 | Double types is not supported in Python")
-    logger.warning("调用 isFloat 进行判断")
-    return isFloat(x)
+def isDouble(x: Any) -> exit:
+    raise TypeError("Python 不支持 Double 类型 | Double types is not supported in Python")
 
 
 def isArray(x: Iterable) -> bool:
@@ -51,8 +65,10 @@ def isArray(x: Iterable) -> bool:
 
 def isImmutable(x: Any) -> bool:
     try:
-        dict()[x]
+        dict()[x] = 1
+        return True
     except TypeError:
         return False
-    else:
-        return True
+
+
+def isHashable(x: Any) -> bool: return isinstance(x, Hashable)
