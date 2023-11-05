@@ -108,7 +108,7 @@ class HighPrecisionAlgorithms:
             Raises:
                 TypeError: 输入必须为整数 Input must be a number.
             """
-            from ...type.extra import isNumber
+            from ...types.extra import isNumber
 
             if not isNumber(a) or not isNumber(b):
                 raise TypeError("输入必须为整数 Input must be a number.")

@@ -22,11 +22,11 @@ class HighPrecisionAlgorithms:
                 str: 两个加数之和
 
             Raises:
-                TypeError: 输入必须为字符串类型数据 Input must be a str-type data.
+                TypeError: 输入必须为字符串类型数据 Input must be a str-types data.
                 TypeError: 输入必须为整数 Input must be an integer.
             """
             if not (type(a) == type(b) == str):
-                raise TypeError("输入必须为字符串类型数据 Input must be a str-type data.")
+                raise TypeError("输入必须为字符串类型数据 Input must be a str-types data.")
 
             if not (a.isdigit() and b.isdigit()):
                 raise TypeError("输入必须为整数 Input must be an integer.")
@@ -69,11 +69,11 @@ class HighPrecisionAlgorithms:
                 str: 计算结果
 
             Raises:
-                TypeError: 输入必须为字符串类型数据 Input must be a str-type data.
+                TypeError: 输入必须为字符串类型数据 Input must be a str-types data.
                 TypeError: 输入必须为小数 Input must be a float.
             """
             if not (type(a) == type(b) == str):
-                raise TypeError("输入必须为字符串类型数据 Input must be a str-type data.")
+                raise TypeError("输入必须为字符串类型数据 Input must be a str-types data.")
 
             if a.isdigit() and b.isdigit():
                 return self.int(a, b)
@@ -157,11 +157,11 @@ class HighPrecisionAlgorithms:
                 str: 结果
 
             Raises:
-                TypeError: 输入必须为字符串类型数据 Input must be a str-type data.
+                TypeError: 输入必须为字符串类型数据 Input must be a str-types data.
                 TypeError: 输入必须为整数 Input must be an integer.
             """
             if not (type(a) == type(b) == str):
-                raise TypeError("输入必须为字符串类型数据 Input must be a str-type data.")
+                raise TypeError("输入必须为字符串类型数据 Input must be a str-types data.")
 
             if not (a.isdigit() and b.isdigit()):
                 raise TypeError("输入必须为整数 Input must be an integer.")
@@ -205,11 +205,11 @@ class HighPrecisionAlgorithms:
                 str: 结果
 
             Raises:
-                TypeError: 输入必须为字符串类型数据 Input must be a str-type data.
+                TypeError: 输入必须为字符串类型数据 Input must be a str-types data.
                 TypeError: 输入必须为小数 Input must be a float.
             """
             if not (type(a) == type(b) == str):
-                raise TypeError("输入必须为字符串类型数据 Input must be a str-type data.")
+                raise TypeError("输入必须为字符串类型数据 Input must be a str-types data.")
 
             if a.isdigit() and b.isdigit():
                 return self.int(a, b)

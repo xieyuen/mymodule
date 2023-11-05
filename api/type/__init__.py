@@ -1,14 +1,14 @@
-from ...type.base import \
+from ...types.base import \
 	isInt, isFloat, isComplex, isStr, \
 	isList, isTuple, isDict, isSet, \
 	isCallable, isIterable, isIterator, \
 	isGenerator, isBool, isNone
 
-from ...type.cname import \
+from ...types.cname import \
 	isInteger, isString, isNum, isDictionary, \
 	isChar, isMap, isBoolean, isFunc
 
-from ...type.extra import \
+from ...types.extra import \
 	isLongReal, isReal, isNumber, isEmpty, isNumNoBool, \
 	isCanFor, isImmutable, isCharacter, isArray, isDouble, \
 	isFunction
