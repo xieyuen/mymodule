@@ -14,8 +14,8 @@ def toDecorator(dec: Callable[[Callable, ...], Any]) -> Callable:
         ... def test(a):
         ...     return a + 1
         >>> test(1)
-        test_dec (1,) {}
-        2
+        test (1,) {}
+        > 2
 
     """
 
