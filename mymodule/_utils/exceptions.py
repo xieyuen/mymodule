@@ -1,2 +1,0 @@
-class RetryFailed(Exception):
-    pass

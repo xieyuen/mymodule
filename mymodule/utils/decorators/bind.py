@@ -1,6 +1,6 @@
 from typing import Callable, TypeVar
 
-from .to_decorator import toDecorator
+from mymodule.utils.decorators.to_decorator import to_decorator
 
 ARGS = TypeVar("ARGS")
 BIND_ARGS = TypeVar("BIND_ARGS")
@@ -38,7 +38,7 @@ def bind(
         (1, 2, 3)
     """
 
-    @toDecorator
+    @to_decorator
     def bound(callback, *args, **kwargs):
         return callback(*bind_args, *args, **bind_kwargs, **kwargs)
 

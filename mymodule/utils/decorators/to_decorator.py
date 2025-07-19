@@ -1,12 +1,12 @@
 from typing import Callable, Any
 
 
-def toDecorator(dec: Callable[[Callable, ...], Any]) -> Callable:
+def to_decorator(dec: Callable[[Callable, ...], Any]) -> Callable[[Callable], Any]:
     """
     有了它再也不用定义闭包了
 
     Examples:
-        >>> @toDecorator
+        >>> @to_decorator
         ... def test_dec(callback, *args, **kwargs):
         ...     print(callback.__name__, args, kwargs)
         ...     return callback(*args, **kwargs)

@@ -5,18 +5,7 @@ __all__ = ["OverloadFunction"]
 import warnings
 from enum import auto
 from types import UnionType
-from typing import Callable, Self, Dict, Tuple
-
-
-class OverloadFunctionCache:
-    def __init__(self):
-        self.__cache: Dict[Tuple[type] | auto, Callable] = {}
-
-    def __getitem__(self, *types):
-        pass
-
-    def default(self, *args):
-        return
+from typing import Callable, Self
 
 
 class OverloadFunction:
@@ -56,7 +45,17 @@ class OverloadFunction:
         >>> fn(1,"2")
         Traceback (most recent call last):
         ValueError: 未找到与 (1, '2') 类型相匹配的重载函数
-    """
+        >>> fn()
+        Traceback (most recent call last):
+        ValueError: 未找到无参重载函数
+        >>> @fn.overload()
+        ... def fn():
+        ...     print("hello")
+        ...     return 0
+        >>> fn()
+        hello
+        0
+        """
 
     DEFAULT = auto()
     DEFAULT_KEY = (DEFAULT,)
@@ -69,7 +68,7 @@ class OverloadFunction:
         if not args:
             fn = self.__overloads.get(tuple())
             if not fn:
-                raise ValueError(f"未找到与 {args} 类型相匹配的重载函数")
+                raise ValueError(f"未找到无参重载函数")
             return fn()
 
         length = len(args)
